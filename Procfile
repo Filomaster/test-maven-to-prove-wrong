@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* main.kotlin.MainKt
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* MainKt
