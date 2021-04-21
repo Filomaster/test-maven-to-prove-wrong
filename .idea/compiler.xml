@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="maaaaaaven" />
+        <module name="Spark z H2 (poprawa)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="maaaaaaven" target="8" />
+      <module name="Spark z H2 (poprawa)" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

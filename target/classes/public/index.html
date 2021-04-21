@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>H2 App</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div id="windowContainer" v-if="isWindowShowed">
+        <div id="addEditWindow">
+          <div class="boxText">{{title}}</div>
+          <div class="box" style="border-color: black; width: 95%; height: 95%">
+            <div class="betterSize">
+              <div class="table">
+                <table>
+                  <tr class="tableHead">
+                    <th>name</th>
+                    <th>surname</th>
+                    <th>age</th>
+                    <th>pesel</th>
+                    <th v-if="type == 'populate'" style="width: 5%">+</th>
+                  </tr>
+                  <tr class="newTable">
+                    <td>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        minlength="2"
+                        @input="validate()"
+                        :value="modifyUser ? modifyUser.name : ''"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        id="surname"
+                        name="surname"
+                        minlength="2"
+                        @input="validate()"
+                        :value="modifyUser ? modifyUser.surname : ''"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        id="age"
+                        name="age"
+                        min="0"
+                        max="200"
+                        @input="validate()"
+                        :value="modifyUser ? modifyUser.age : ''"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        id="pesel"
+                        name="pesel"
+                        minlength="11"
+                        maxlength="11"
+                        @input="validate()"
+                        :value="modifyUser ? modifyUser.pesel : ''"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div id="controls">
+                <button class="button-window" @click="isWindowShowed = false">
+                  cancel
+                </button>
+                <button
+                  class="button-window"
+                  :class="{disabled: canClick == false}"
+                  @click="action()"
+                >
+                  ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="title">H2 Viewer ver. 1.0.2</div>
+      <div id="container">
+        <div class="wrapper">
+          <div
+            class="box tools"
+            style="background-color: lightgray; border: none"
+          >
+            <div class="button" @click="showWindow('add')">add</div>
+            <!-- <div class="button" @click="showWindow('populate')">populate</div> -->
+            <div
+              class="button"
+              :class="{inactive: selectedRecord == null}"
+              @click="() => {
+                modifyUser = selectedRecord;
+                showWindow('edit');
+              }"
+            >
+              edit
+            </div>
+            <div
+              class="button"
+              :class="{inactive: selectedRecord == null}"
+              @click="()=>{selectedRecord = null}"
+            >
+              deselect
+            </div>
+            <div
+              class="button alert"
+              :class="{inactive: selectedRecord == null}"
+              @click="deleteUser()"
+            >
+              delete
+            </div>
+            <div class="button alert" @click="purgeUsers()">purge</div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="box table">
+            <table>
+              <tr>
+                <th class="num">num</th>
+                <th
+                  :class="{ menuSelection: sortSelection=='name'}"
+                  @click="()=>{ sortSelection = 'name'
+                users = users.sort((a,b) => a.name > b.name)}"
+                >
+                  name
+                </th>
+                <th
+                  :class="{ menuSelection: sortSelection=='surname'}"
+                  @click="()=>{ sortSelection = 'surname'
+              users = users.sort((a,b) => a.surname  >  b.surname)}"
+                >
+                  surname
+                </th>
+                <th
+                  :class="{ menuSelection: sortSelection=='age'}"
+                  @click="()=>{ sortSelection = 'age'
+            users = users.sort((a,b) => a.age - b.age)}"
+                >
+                  age
+                </th>
+                <th
+                  :class="{ menuSelection: sortSelection=='pesel'}"
+                  @click="()=>{ sortSelection = 'pesel'
+          users = users.sort((a,b) => a.pesel - b.pesel)}"
+                >
+                  pesel
+                </th>
+                <th
+                  :class="{ menuSelection: sortSelection=='id'}"
+                  @click="()=>{ sortSelection = 'id'
+        users = users.sort((a,b) => a.id - b.id)}"
+                >
+                  id
+                </th>
+              </tr>
+              <tr
+                @click="() => {selectedRecord = data}"
+                :class="{selected: selectedRecord == data }"
+                v-if="data != null"
+                v-for="(data, index) in users"
+                :key="data.id"
+              >
+                <td class="number num">{{index + 1}}</td>
+                <td class="string name">{{data.name}}</td>
+                <td class="string surname">{{data.surname}}</td>
+                <td class="number age">{{data.age}}</td>
+                <td class="number pesel">{{data.pesel}}</td>
+                <td class="number id">{{data.id}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
