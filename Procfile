@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* main.com.project.AppKt
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* MainKt
